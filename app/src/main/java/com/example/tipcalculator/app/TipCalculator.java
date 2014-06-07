@@ -1,52 +1,87 @@
 package com.example.tipcalculator.app;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
 
 
 public class TipCalculator extends Activity {
     private EditText etTotalAmount;
-    private enum TipPercentOption {
-        PERCENT10, PERCENT15, PERCENT20
-    }
-    private TipPercentOption lastChosenTipPercent;
-    private Button bn10;
-    private Button bn15;
-    private Button bn20;
+    private float lastChosenTipPercent;
+    private int lastChosenNumWaysSplitting;
+    static final String CHOSEN_TIP_PERCENT = "com.example.tipcalculator.app.chosentippercent";
+    static final float DEFAULT_TIP_PERCENT = 0.15f;
+    static final String CHOSEN_NUM_WAYS_SPLITTING = "com.example.tipcalculator.app.chosennumwayssplitting";
+    static final int DEFAULT_NUM_WAYS_SPLITTING = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tip_calculator);
         etTotalAmount = (EditText) findViewById(R.id.etTotal);
-        bn10 = (Button) findViewById(R.id.bn10);
-        bn15 = (Button) findViewById(R.id.bn15);
-        bn20 = (Button) findViewById(R.id.bn20);
-        lastChosenTipPercent = TipPercentOption.PERCENT15; // as default
+        loadDefaultValues();
+        setUpNumberPickers();
         addAmountChangedListener();
+    }
 
+    private void loadDefaultValues() {
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        lastChosenTipPercent = prefs.getFloat(CHOSEN_TIP_PERCENT, DEFAULT_TIP_PERCENT);
+        lastChosenNumWaysSplitting = prefs.getInt(CHOSEN_NUM_WAYS_SPLITTING, DEFAULT_NUM_WAYS_SPLITTING);
+    }
+
+    private void setUpNumberPickers() {
+        NumberPicker npPercent = (NumberPicker) findViewById(R.id.npPercent);
+        npPercent.setMaxValue(50);
+        npPercent.setMinValue(10);
+        npPercent.setValue((int)(lastChosenTipPercent * 100f));
+        npPercent.setWrapSelectorWheel(false);
+        npPercent.setOnValueChangedListener( new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int
+                    oldVal, int newVal) {
+                lastChosenTipPercent = newVal / 100.0f;
+                SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+                editor.putFloat(CHOSEN_TIP_PERCENT, lastChosenTipPercent).commit();
+                updateTipAmount();
+
+            }
+        });
+        NumberPicker npNumWaysSplit = (NumberPicker) findViewById(R.id.npNumWaysSplit);
+        npNumWaysSplit.setMaxValue(50);
+        npNumWaysSplit.setMinValue(1);
+        npNumWaysSplit.setValue(lastChosenNumWaysSplitting);
+        npNumWaysSplit.setWrapSelectorWheel(false);
+        npNumWaysSplit.setOnValueChangedListener( new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int
+                    oldVal, int newVal) {
+                lastChosenNumWaysSplitting = newVal;
+                SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+                editor.putInt(CHOSEN_NUM_WAYS_SPLITTING, lastChosenNumWaysSplitting).commit();
+                updateTipAmount();
+            }
+        });
     }
 
     private void addAmountChangedListener() {
         etTotalAmount.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 updateTipAmount();
@@ -69,32 +104,10 @@ public class TipCalculator extends Activity {
             return;
         }
         double tip = 0;
-        if (lastChosenTipPercent == TipPercentOption.PERCENT10) {
-            tip = total * 0.1;
-        } else if (lastChosenTipPercent == TipPercentOption.PERCENT15) {
-            tip = total * 0.15;
-        } else if (lastChosenTipPercent == TipPercentOption.PERCENT20) {
-            tip = total * 0.2;
-        }
+        tip = total * lastChosenTipPercent / (double)lastChosenNumWaysSplitting;
         TextView tvTip = (TextView)findViewById(R.id.tvTip);
-        tvTip.setText("Tip is: $" + tip);
-    }
-
-    public void onPercentChosen(View view) {
-        switch (view.getId()) {
-            case R.id.bn10:
-                lastChosenTipPercent = TipPercentOption.PERCENT10;
-                break;
-            case R.id.bn15:
-                lastChosenTipPercent = TipPercentOption.PERCENT15;
-                break;
-            case R.id.bn20:
-                lastChosenTipPercent = TipPercentOption.PERCENT20;
-                break;
-            default:
-                break;
-        }
-        updateTipAmount();
+        DecimalFormat df = new DecimalFormat("####0.00");
+        tvTip.setText("Tip is: $" + df.format(tip));
     }
 
     @Override
