@@ -9,7 +9,7 @@
         <activity
             android:name="com.example.tipcalculator.app.TipCalculator"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" >
+            android:windowSoftInputMode="stateHidden|adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
