@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -17,19 +13,32 @@
         android:paddingRight="16dp"
         android:orientation="vertical" >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Bill Amount"
+            android:id="@+id/textView" />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_marginTop="50dp"
-            android:inputType="number"
-            android:ems="10"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:ems="18"
             android:id="@+id/etTotal"
             android:hint="0.00" />
 
         <LinearLayout
             android:id="@+id/selectionLayout"
-            android:layout_width="fill_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
             <include layout="@layout/select_tip_percent_picker"
                 android:layout_weight="1"/>
@@ -37,14 +46,37 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/labelLayout"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/money_icon"
+            android:id="@+id/imageView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginLeft="7dp"
+            android:text="Tip Amount"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/tvTip"
-            android:hint="Tip is: 0.00" />
+            android:hint="$0.00" />
 
     </LinearLayout>
 </ScrollView>
-</RelativeLayout>
+

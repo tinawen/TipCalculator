@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -19,22 +20,25 @@ public class TipCalculator extends Activity {
     private EditText etTotalAmount;
     private float lastChosenTipPercent;
     private int lastChosenNumWaysSplitting;
+    // constants
     static final String CHOSEN_TIP_PERCENT = "com.example.tipcalculator.app.chosentippercent";
-    static final float DEFAULT_TIP_PERCENT = 0.15f;
     static final String CHOSEN_NUM_WAYS_SPLITTING = "com.example.tipcalculator.app.chosennumwayssplitting";
+    static final float DEFAULT_TIP_PERCENT = 0.15f;
     static final int DEFAULT_NUM_WAYS_SPLITTING = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_tip_calculator);
+
         etTotalAmount = (EditText) findViewById(R.id.etTotal);
-        loadDefaultValues();
+        loadDefaultPersistentValues();
         setUpNumberPickers();
         addAmountChangedListener();
     }
 
-    private void loadDefaultValues() {
+    private void loadDefaultPersistentValues() {
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         lastChosenTipPercent = prefs.getFloat(CHOSEN_TIP_PERCENT, DEFAULT_TIP_PERCENT);
         lastChosenNumWaysSplitting = prefs.getInt(CHOSEN_NUM_WAYS_SPLITTING, DEFAULT_NUM_WAYS_SPLITTING);
@@ -51,6 +55,7 @@ public class TipCalculator extends Activity {
             public void onValueChange(NumberPicker picker, int
                     oldVal, int newVal) {
                 lastChosenTipPercent = newVal / 100.0f;
+                // save to persistent storage
                 SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
                 editor.putFloat(CHOSEN_TIP_PERCENT, lastChosenTipPercent).commit();
                 updateTipAmount();
@@ -67,6 +72,7 @@ public class TipCalculator extends Activity {
             public void onValueChange(NumberPicker picker, int
                     oldVal, int newVal) {
                 lastChosenNumWaysSplitting = newVal;
+                // save to persistent storage
                 SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
                 editor.putInt(CHOSEN_NUM_WAYS_SPLITTING, lastChosenNumWaysSplitting).commit();
                 updateTipAmount();
@@ -95,6 +101,7 @@ public class TipCalculator extends Activity {
         }
         double total = 0;
         String totalString = etTotalAmount.getText().toString();
+        // try catch is probably not needed since I'm using a number picker here, but for safety
         try {
             total = Double.parseDouble(totalString);
         } catch (NumberFormatException e) {
@@ -107,7 +114,7 @@ public class TipCalculator extends Activity {
         tip = total * lastChosenTipPercent / (double)lastChosenNumWaysSplitting;
         TextView tvTip = (TextView)findViewById(R.id.tvTip);
         DecimalFormat df = new DecimalFormat("####0.00");
-        tvTip.setText("Tip is: $" + df.format(tip));
+        tvTip.setText("$" + df.format(tip));
     }
 
     @Override
@@ -129,5 +136,4 @@ public class TipCalculator extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
