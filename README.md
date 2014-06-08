@@ -14,7 +14,7 @@ User can edit preset tip percentages and have them persist across launches using
 Experiment with trying input widgets to replace the buttons and/or textviews
 Improve the user interface and experience by using images and/or color
 
-./tip_calculator.gif
+<img src="./tip_calculator.gif" alt="This will display an animated GIF" />
 
 Notes:
 I made sure the view is scrollable once the keyboard comes up on screen. Layout looks fine in both portrait and landscape. I even have a new app icon!
