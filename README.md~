@@ -1,0 +1,12 @@
+How many hours did it take to complete?
+I did this in 3 batches, probably around 7 to 8 hours in total.
+
+Which required and optional stories have you completed?
+I have completed all required stories and
+User changes the total amount and updated tip is reflected automatically
+User can select custom tip percentage if desired
+User can select how many ways to split the tip
+User can edit preset tip percentages and have them persist across launches using shared preferences
+Experiment with trying input widgets to replace the buttons and/or textviews
+Improve the user interface and experience by using images and/or color
+
