@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scrollView">
+    android:id="@+id/svMain">
 
     <LinearLayout
-        android:id="@+id/rlayout"
+        android:id="@+id/llMain"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
@@ -19,8 +19,8 @@
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Bill Amount"
-            android:id="@+id/textView" />
+            android:text="@string/bill_amount"
+            android:id="@+id/tvBillAmount" />
 
         <EditText
             android:layout_width="match_parent"
@@ -32,10 +32,10 @@
             android:inputType="numberDecimal"
             android:ems="18"
             android:id="@+id/etTotal"
-            android:hint="0.00" />
+            android:hint="@string/zero" />
 
         <LinearLayout
-            android:id="@+id/selectionLayout"
+            android:id="@+id/llPickers"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
         </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/labelLayout"
+        android:id="@+id/llTipAmount"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
@@ -57,14 +57,14 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@drawable/money_icon"
-            android:id="@+id/imageView" />
+            android:id="@+id/ivTipAmount" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginLeft="7dp"
-            android:text="Tip Amount"
-            android:id="@+id/textView2"
+            android:text="@string/tip_amount"
+            android:id="@+id/tvTipAmount"
             android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
@@ -75,7 +75,7 @@
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/tvTip"
-            android:hint="$0.00" />
+            android:hint="@string/zero_amount" />
 
     </LinearLayout>
 </ScrollView>

@@ -13,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:layout_marginTop="30dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="People"
+        android:text="@string/num_people"
         android:id="@+id/tvNumWaysSplit" />
 
     <NumberPicker

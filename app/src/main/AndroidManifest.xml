@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="com.example.tipcalculator.app.TipCalculator"
+            android:name="com.example.tipcalculator.app.TipCalculatorActivity"
             android:icon="@drawable/money_icon"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden|adjustResize" >

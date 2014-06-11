@@ -14,9 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Tip %"
-        android:id="@+id/tvPromptTipPercent" />
+        android:text="@string/tip_percent"
+        android:id="@+id/tvPercent" />
 
     <NumberPicker
         android:layout_width="match_parent"

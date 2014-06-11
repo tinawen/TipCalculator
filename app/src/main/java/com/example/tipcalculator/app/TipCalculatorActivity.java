@@ -16,7 +16,7 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 
 
-public class TipCalculator extends Activity {
+public class TipCalculatorActivity extends Activity {
     private EditText etTotalAmount;
     private float lastChosenTipPercent;
     private int lastChosenNumWaysSplitting;
@@ -106,7 +106,7 @@ public class TipCalculator extends Activity {
             total = Double.parseDouble(totalString);
         } catch (NumberFormatException e) {
             // alert the user
-            Toast.makeText(this, "Please enter a number amount", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.prompt_enter_number, Toast.LENGTH_SHORT).show();
             etTotalAmount.setText("");
             return;
         }
